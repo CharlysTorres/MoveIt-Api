@@ -8,7 +8,7 @@ export default {
       id: user.id,
       name: user.name,
       email: user.email,
-      avatar: AvatarView.renderMany(user.avatar),
+      avatar: AvatarView.render(user.avatar),
       level: LevelView.render(user.level),
     };
   },

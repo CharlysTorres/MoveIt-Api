@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
-import { UsersRepositories } from "../repositories/UserRepositories";
+import { UsersRepository } from "../repositories/UserRepository";
 
 interface AuthenticateRequest {
   email: string;
@@ -12,9 +12,11 @@ interface AuthenticateRequest {
 class AuthenticateUserServices {
 
   async execute({ email, password }: AuthenticateRequest) {
-    const userRepoitories = getCustomRepository(UsersRepositories);
+    const userRepoitory = getCustomRepository(UsersRepository);
 
-    const user = await userRepoitories.findOne({email});
+    const user = await userRepoitory.findOneOrFail({email}, {
+      relations: ['avatar', 'level']
+    });
 
     if(!user) {
       throw new Error("email or password incorrect");
@@ -28,9 +30,12 @@ class AuthenticateUserServices {
 
     const token = sign({
       email: user.email,
+      name: user.name,
+      avatar: user.avatar,
+      level: user.level,
     }, "28e022fe2d88dbc6c91c8542fc06e2ea", {
       subject: user.id,
-      expiresIn: "30d"
+      expiresIn: "7d"
     });
 
     return token;

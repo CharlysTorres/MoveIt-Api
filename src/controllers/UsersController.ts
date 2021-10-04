@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import * as Yup from 'yup';
@@ -36,6 +36,9 @@ export default {
       name,
       email,
       password,
+      level,
+      currentExperience,
+      challengesCompleted
     } = request.body;
   
     const usersRepository = getRepository(User);
@@ -60,17 +63,25 @@ export default {
 
     const passwordHash = await hash(password, 8);
 
-    const requestAvatar = request.files as Express.Multer.File[];
+    const requestAvatar = request.file as Express.Multer.File;
     
-    const avatar = requestAvatar.map(image => {
-      return { path: image.filename }
-    });
+    const avatar = {
+      path: requestAvatar.path,
+    }
+    console.log(avatar);
+
+    // const avatar = requestAvatar.map(image => {
+    //   return { path: image.filename }
+    // });
 
     const data = {
       name,
       email,
       password: passwordHash,
       avatar,
+      level,
+      currentExperience,
+      challengesCompleted,
       //level: userLevel,
     };
 
@@ -78,9 +89,12 @@ export default {
       name: Yup.string().required(),
       email: Yup.string().required(),
       password: Yup.string().required(),
-      avatar: Yup.array(Yup.object().shape({
-        path: Yup.string().required()
-      }))
+      avatar: Yup.object().shape({
+        path: Yup.string().required(),
+      }),
+      // avatar: Yup.array(Yup.object().shape({
+      //   path: Yup.string().required()
+      // }))
     });
 
     schema.validate(data, {
@@ -93,5 +107,21 @@ export default {
   
     return response.status(201).json(user);
   },
-  async update() {}
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const {
+      name,
+      avatar
+    } = request.body;
+
+    await getConnection()
+      .createQueryBuilder()
+      .update(User)
+      .set({ name })
+      .where("id = :id", { id })
+      .execute();
+
+    response.status(201).json({ message: "User successfully updated" });
+  }
 }

@@ -1,18 +1,15 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 
 import Level from '../models/Level';
-import User from '../models/User';
 import LevelView from '../views/LevelView';
 
 export default {
-
+  
   async index(request: Request, response: Response) {
     const levelRepository = getRepository(Level);
-    const userRepository = getRepository(User);
-
+    
     const levels = await levelRepository.find();
-    const users = await userRepository.find();
 
     return response.json(levels)
   },
@@ -45,5 +42,19 @@ export default {
     return response.status(201).json(levels);
   },
 
-  async update(request: Request, response: Response) {},
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const {
+      level,
+      currentExperience,
+      challengesCompleted
+    } = request.body;
+    
+    await getConnection().createQueryBuilder().update(Level)
+      .set({ level, currentExperience, challengesCompleted})
+      .where("user_id = :id", { id }).execute();
+    
+    return response.status(201).json({ message: "Level updated" });
+  },
 }

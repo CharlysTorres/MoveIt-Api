@@ -8,7 +8,7 @@ interface Payload {
 export function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
 
     //Receber o token 
-    const authToken = request.headers.authorization
+    const authToken = request.headers.authorization;
 
 
     // Validar se token está preenchido
@@ -17,19 +17,16 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
     }
 
     const [, token] = authToken.split(" ")
-    console.log(token);
 
     try {
         // Validar se o token é valido
-        const { sub } = verify(token , "3544bb6f0a9f64a82c9976b22ae6cdc7") as Payload;
+        const decode = verify(token , "28e022fe2d88dbc6c91c8542fc06e2ea") as Payload;
 
         // Recuperar informações do usuário
-        request.user_id = sub;
+        request.user_id = decode.sub;
 
-        return next();
+        return next(), decode;
     } catch(err){
         return response.status(401).end();
     }
-
-    // Recuperar informação do usuário
 }
