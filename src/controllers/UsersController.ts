@@ -36,18 +36,9 @@ export default {
       name,
       email,
       password,
-      level,
-      currentExperience,
-      challengesCompleted
     } = request.body;
   
     const usersRepository = getRepository(User);
-
-    // const userLevel = {
-    //   level: 1,
-    //   currentExperience: 0,
-    //   challengesCompleted: 0
-    // }
   
     const userAlreadyExists = await usersRepository.findOne({
       email
@@ -68,21 +59,12 @@ export default {
     const avatar = {
       path: requestAvatar.path,
     }
-    console.log(avatar);
-
-    // const avatar = requestAvatar.map(image => {
-    //   return { path: image.filename }
-    // });
 
     const data = {
       name,
       email,
       password: passwordHash,
       avatar,
-      level,
-      currentExperience,
-      challengesCompleted,
-      //level: userLevel,
     };
 
     const schema = Yup.object().shape({
@@ -92,9 +74,6 @@ export default {
       avatar: Yup.object().shape({
         path: Yup.string().required(),
       }),
-      // avatar: Yup.array(Yup.object().shape({
-      //   path: Yup.string().required()
-      // }))
     });
 
     schema.validate(data, {
