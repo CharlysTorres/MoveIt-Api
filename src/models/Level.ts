@@ -10,13 +10,13 @@ export default class Level {
   readonly id: string;
 
   @Column()
-  level: number;
+  level: string;
 
   @Column()
-  currentExperience: number;
+  currentExperience: string;
 
   @Column()
-  challengesCompleted: number;
+  challengesCompleted: string;
 
   @Column()
   user_id: string;
