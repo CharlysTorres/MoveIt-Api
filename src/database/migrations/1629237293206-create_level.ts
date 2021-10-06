@@ -12,18 +12,15 @@ export class createLevel1629237293206 implements MigrationInterface {
         },
         {
           name: 'level',
-          type: 'integer',
-          default: 1,
+          type: 'varchar',
         },
         {
           name: 'currentExperience',
-          type: 'integer',
-          default: 0,
+          type: 'varchar',
         },
         {
           name: 'challengesCompleted',
-          type: 'integer',
-          default: 0, 
+          type: 'varchar',
         },
         {
           name: 'user_id',
