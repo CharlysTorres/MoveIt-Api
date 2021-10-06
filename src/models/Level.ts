@@ -18,9 +18,6 @@ export default class Level {
   @Column()
   challengesCompleted: string;
 
-  @Column()
-  user_id: string;
-
   constructor() {
     if(!this.id) {
       this.id = uuid();

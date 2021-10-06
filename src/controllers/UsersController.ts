@@ -37,6 +37,17 @@ export default {
       email,
       password,
     } = request.body;
+
+    
+    const level = {
+      level: '1',
+      currentExperience: '0',
+      challengesCompleted: '0',
+    }
+
+    // const level = '1';
+    // const currentExperience = '0';
+    // const challengesCompleted = '0';
   
     const usersRepository = getRepository(User);
   
@@ -65,6 +76,7 @@ export default {
       email,
       password: passwordHash,
       avatar,
+      level,
     };
 
     const schema = Yup.object().shape({
@@ -74,6 +86,11 @@ export default {
       avatar: Yup.object().shape({
         path: Yup.string().required(),
       }),
+      level: Yup.object().shape({
+        level: Yup.string().required(),
+        currentExperience: Yup.string().required(),
+        challengesCompleted: Yup.string().required(),
+      })
     });
 
     schema.validate(data, {

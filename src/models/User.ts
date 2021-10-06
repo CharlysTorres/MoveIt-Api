@@ -24,7 +24,9 @@ export default class User {
     }
   }
 
-  @OneToOne(() => Level, level => level.user)
+  @OneToOne(() => Level, level => level.user, {
+    cascade: ['insert', 'update']
+  })
   level: Level;
 
   @OneToOne(() => Avatar, avatar => avatar.user, {

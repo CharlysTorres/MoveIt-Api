@@ -9,6 +9,7 @@ export class createLevel1629237293206 implements MigrationInterface {
         {
           name: 'id',
           type: 'uuid',
+          isPrimary: true
         },
         {
           name: 'level',
@@ -29,7 +30,7 @@ export class createLevel1629237293206 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          name: 'Level',
+          name: 'UserLevel',
           columnNames: ['user_id'],
           referencedTableName: 'users',
           referencedColumnNames: ['id'],
