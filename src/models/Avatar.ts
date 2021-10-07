@@ -10,7 +10,7 @@ export default class Avatar {
   id: string;
 
   @Column()
-  path: string;
+  url: string;
 
   constructor() {
     if(!this.id) {

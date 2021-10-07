@@ -12,7 +12,7 @@ export class createAvatar1625570164189 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: 'path',
+          name: 'url',
           type: 'varchar'
         },
         {
