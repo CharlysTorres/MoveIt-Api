@@ -68,7 +68,7 @@ export default {
     const requestAvatar = request.file as Express.Multer.File;
     
     const avatar = {
-      path: requestAvatar.path,
+      url: requestAvatar.path,
     }
 
     const data = {
@@ -84,7 +84,7 @@ export default {
       email: Yup.string().required(),
       password: Yup.string().required(),
       avatar: Yup.object().shape({
-        path: Yup.string().required(),
+        url: Yup.string().required(),
       }),
       level: Yup.object().shape({
         level: Yup.string().required(),
