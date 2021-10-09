@@ -14,6 +14,8 @@ class AuthenticateUserServices {
   async execute({ email, password }: AuthenticateRequest) {
     const userRepoitory = getCustomRepository(UsersRepository);
 
+    const secretKey = process.env.SECRET_KEY;
+
     const user = await userRepoitory.findOneOrFail({email}, {
       relations: ['avatar', 'level']
     });
@@ -33,7 +35,7 @@ class AuthenticateUserServices {
       name: user.name,
       avatar: user.avatar,
       level: user.level,
-    }, "28e022fe2d88dbc6c91c8542fc06e2ea", {
+    }, secretKey, {
       subject: user.id,
       expiresIn: "7d"
     });

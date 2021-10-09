@@ -2,12 +2,15 @@ import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 import 'express-async-errors';
 import './database/connection';
 
 import routes from './routes';
 import errorHandler from './errors/handler';
+
+dotenv.config();
 
 const app = express();
 

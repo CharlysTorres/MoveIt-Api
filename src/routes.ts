@@ -13,6 +13,7 @@ const upload = multer(uploadConfig);
 const authenticateUserController = new AuthenticateUserController();
 
 routes.post('/users', upload.single('avatar'), UsersController.create);
+routes.delete('/users/:id', UsersController.delete);
 routes.post('/login', authenticateUserController.handle);
 routes.post('/level', LevelController.create);
 routes.get('/users', UsersController.index);
