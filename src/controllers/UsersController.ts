@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import { getRepository, getConnection } from 'typeorm';
 import { hash } from 'bcryptjs';
+import path from 'path';
+import aws from 'aws-sdk';
+import fs from 'fs';
+import { promisify } from 'util';
 
 import * as Yup from 'yup';
 
@@ -66,9 +70,11 @@ export default {
     const passwordHash = await hash(password, 8);
 
     const requestAvatar = request.file as Express.Multer.File;
+
+    const { location: url } = request.file as Express.MulterS3.File;
     
     const avatar = {
-      url: requestAvatar.path,
+      url: requestAvatar.path || url,
     }
 
     const data = {
@@ -119,5 +125,27 @@ export default {
       .execute();
 
     response.status(201).json({ message: "User successfully updated" });
+  },
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    // const s3 = new aws.S3();
+
+    // if(process.env.STORAGE_TYPE === 's3') {
+    //   return s3.deleteObject({
+    //     Bucket: process.env.AWS_BUCKET,
+    //     Key: ''
+    //   }).promise();
+    // }else {
+    //   return promisify(fs.unlink)(path.resolve(__dirname, '..', '..', 'uploads'))
+    // }
+
+    await getConnection().createQueryBuilder()
+      .delete().from(User)
+      .where("id = :id", { id })
+      .execute();
+    
+    return response.status(200).end();
   }
 }
