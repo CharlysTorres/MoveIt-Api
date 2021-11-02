@@ -10,13 +10,16 @@ export default class Level {
   readonly id: string;
 
   @Column()
-  level: string;
+  level: number;
 
   @Column()
-  currentExperience: string;
+  experience: number;
 
   @Column()
-  challengesCompleted: string;
+  currentExperience: number;
+
+  @Column()
+  challengesCompleted: number;
 
   constructor() {
     if(!this.id) {

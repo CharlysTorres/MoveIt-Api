@@ -4,7 +4,7 @@ export default {
   render(avatar: Avatar) {
     return {
       id: avatar.id,
-      url: `http://localhost:3333/uploads/${avatar.url}`,
+      url: `${avatar.url}`,
     };
   },
 

@@ -6,8 +6,9 @@ export default {
     return {
       id: level.id,
       level: level.level,
+      experience: level.experience,
       currentExperience: level.currentExperience,
-      challegesCompleted: level.challengesCompleted
+      challengesCompleted: level.challengesCompleted
     }
   },
   renderMany(levels: Level[]) {

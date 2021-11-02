@@ -47,14 +47,15 @@ export default {
 
     const {
       level,
+      experience,
       currentExperience,
       challengesCompleted
     } = request.body;
     
     await getConnection().createQueryBuilder().update(Level)
-      .set({ level, currentExperience, challengesCompleted})
+      .set({ level, experience, currentExperience, challengesCompleted })
       .where("user_id = :id", { id }).execute();
     
-    return response.status(201).json({ message: "Level updated" });
+    return response.status(201).json({ user: { id, level, experience, currentExperience, challengesCompleted} });
   },
 }

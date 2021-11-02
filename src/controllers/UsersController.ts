@@ -44,14 +44,11 @@ export default {
 
     
     const level = {
-      level: '1',
-      currentExperience: '0',
-      challengesCompleted: '0',
+      level: 1,
+      experience: 0,
+      currentExperience: 0,
+      challengesCompleted: 0,
     }
-
-    // const level = '1';
-    // const currentExperience = '0';
-    // const challengesCompleted = '0';
   
     const usersRepository = getRepository(User);
   
@@ -93,9 +90,10 @@ export default {
         url: Yup.string().required(),
       }),
       level: Yup.object().shape({
-        level: Yup.string().required(),
-        currentExperience: Yup.string().required(),
-        challengesCompleted: Yup.string().required(),
+        level: Yup.number().required(),
+        experience: Yup.number().required(),
+        currentExperience: Yup.number().required(),
+        challengesCompleted: Yup.number().required(),
       })
     });
 
