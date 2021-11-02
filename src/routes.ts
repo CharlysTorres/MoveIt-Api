@@ -19,7 +19,7 @@ routes.post('/level', LevelController.create);
 routes.get('/users', UsersController.index);
 routes.get('/users/:id', UsersController.show);
 routes.get('/level', LevelController.index);
-routes.put('/level/:id', ensureAuthenticated, LevelController.update);
+routes.put('/level/:id', LevelController.update);
 routes.put('/user/:id', UsersController.update);
 
 export default routes;
