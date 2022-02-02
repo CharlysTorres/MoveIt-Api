@@ -39,7 +39,7 @@
 ## Tecnologias 🚀
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [NodeJS](https://nodejs.org/en/)
-- [Typescrip](https://www.typescriptlang.org/)
+- [Typescript](https://www.typescriptlang.org/)
 - [Typeorm](https://typeorm.org/)
 
 ### Como utilizar o projeto
